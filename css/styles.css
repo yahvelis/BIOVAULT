@@ -1,43 +1,38 @@
 ```css
 /* ============================================================
-   BIOVAULT — FIME / UANL GREEN EDITION
-   Verde institucional + tonos claros + estética biométrica
+   BIOVAULT — FIME / UANL GREEN THEME
+   Verde oscuro como base + tonos progresivos hasta blanco.
    ============================================================ */
 
 :root {
-  /* ---------- palette ---------- */
+  /* ---------- paleta principal ---------- */
+  --bg: #06452f;
+  --surface: #075c3d;
+  --surface-alt: #0a7049;
 
-  --green-dark: #075c3a;
-  --green-main: #0b7549;
-  --green-medium: #229463;
-  --green-light: #55b982;
-  --green-pale: #bfe5cf;
-  --green-soft: #e4f3ea;
+  --border: #249c68;
+  --border-soft: #177d52;
 
-  --white: #ffffff;
-  --off-white: #f4faf6;
+  --text: #f4fff9;
+  --text-dim: #bdebd2;
+  --text-faint: #83cfa6;
 
-  --bg: var(--off-white);
-  --surface: var(--white);
-  --surface-alt: var(--green-soft);
+  /* ---------- tonos verdes ---------- */
+  --green-dark: #06452f;
+  --green-main: #0b7a4f;
+  --green-medium: #249c68;
+  --green-light: #72cfa0;
+  --green-pale: #ccebd9;
 
-  --border: #a8d7bd;
-  --border-soft: #d2eadd;
-
-  --text: #123b2b;
-  --text-dim: #4d6f5e;
-  --text-faint: #769587;
-
-  --steel: #4e9f78;
-
-  --accept: #16834f;
-  --reject: #c94f4f;
+  /* ---------- estados ---------- */
+  --accept: #8ee6b1;
+  --reject: #ffaaa0;
 
   --font-display: "Space Grotesk", "IBM Plex Sans", sans-serif;
   --font-body: "IBM Plex Sans", sans-serif;
   --font-mono: "IBM Plex Mono", monospace;
 
-  --radius: 5px;
+  --radius: 3px;
   --content-width: 1080px;
 }
 
@@ -81,6 +76,7 @@ h3 {
   font-weight: 600;
   margin: 0;
   letter-spacing: -0.01em;
+  color: var(--text);
 }
 
 h1 {
@@ -105,10 +101,10 @@ p {
 
 code {
   font-family: var(--font-mono);
-  background: var(--green-soft);
+  background: var(--surface-alt);
   padding: 0.1em 0.4em;
-  border-radius: 3px;
-  color: var(--green-dark);
+  border-radius: 2px;
+  color: var(--green-pale);
   font-size: 0.9em;
 }
 
@@ -117,16 +113,15 @@ code {
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.018;
-  background-image: radial-gradient(
-    circle,
-    var(--green-dark) 1px,
-    transparent 1px
-  );
-  background-size: 4px 4px;
+  opacity: 0.025;
+  background-image: radial-gradient(circle, #fff 1px, transparent 1px);
+  background-size: 3px 3px;
 }
 
-/* ---------- layout helpers ---------- */
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
 
 .section {
   max-width: var(--content-width);
@@ -138,7 +133,7 @@ code {
 
 .section__kicker {
   font-family: var(--font-mono);
-  color: var(--green-main);
+  color: var(--green-light);
   font-size: 0.8rem;
   letter-spacing: 0.02em;
   margin: 0 0 0.6rem;
@@ -149,22 +144,26 @@ code {
   margin-top: 1rem;
 }
 
-/* ---------- nav ---------- */
+
+/* ============================================================
+   NAV
+   ============================================================ */
 
 .nav {
   position: sticky;
   top: 0;
   z-index: 20;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   padding: 1.1rem 1.5rem;
 
-  background: rgba(7, 92, 58, 0.96);
-  backdrop-filter: blur(10px);
+  background: rgba(6, 69, 47, 0.95);
+  backdrop-filter: blur(8px);
 
-  border-bottom: 1px solid var(--green-main);
-  box-shadow: 0 3px 16px rgba(7, 92, 58, 0.16);
+  border-bottom: 1px solid var(--green-medium);
 }
 
 .nav__brand {
@@ -175,9 +174,9 @@ code {
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 1.05rem;
-  text-decoration: none;
 
-  color: var(--white);
+  text-decoration: none;
+  color: var(--green-light);
 }
 
 .nav__links {
@@ -189,26 +188,24 @@ code {
 
 .nav__links a {
   text-decoration: none;
-  color: #d9f0e3;
-  transition: color 0.15s ease;
+  color: var(--text-dim);
 }
 
 .nav__links a:hover {
-  color: var(--white);
+  color: var(--text);
 }
 
 .nav__cta {
-  border: 1px solid var(--green-pale);
-  color: var(--white) !important;
+  border: 1px solid var(--green-light);
+  color: var(--green-pale) !important;
   padding: 0.4rem 0.9rem;
   border-radius: var(--radius);
 }
 
-.nav__cta:hover {
-  background: var(--green-main);
-}
 
-/* ---------- buttons ---------- */
+/* ============================================================
+   BUTTONS
+   ============================================================ */
 
 .btn {
   display: inline-flex;
@@ -222,9 +219,10 @@ code {
   font-family: var(--font-body);
   font-weight: 500;
   font-size: 0.95rem;
-  text-decoration: none;
 
+  text-decoration: none;
   cursor: pointer;
+
   border: 1px solid transparent;
 
   transition:
@@ -234,35 +232,34 @@ code {
 }
 
 .btn--primary {
-  background: var(--green-main);
-  color: var(--white);
-}
-
-.btn--primary:hover {
-  background: var(--green-dark);
-}
-
-.btn--secondary {
-  background: var(--green-soft);
-  border-color: var(--border);
+  background: var(--green-light);
   color: var(--green-dark);
 }
 
-.btn--secondary:hover {
+.btn--primary:hover {
   background: var(--green-pale);
+}
+
+.btn--secondary {
+  background: var(--surface-alt);
+  border-color: var(--green-medium);
+  color: var(--text);
+}
+
+.btn--secondary:hover {
+  background: var(--green-main);
   border-color: var(--green-light);
 }
 
 .btn--ghost {
   background: transparent;
-  border-color: var(--border);
-  color: var(--green-dark);
+  border-color: var(--green-medium);
+  color: var(--text-dim);
 }
 
 .btn--ghost:hover {
-  color: var(--green-main);
-  border-color: var(--green-main);
-  background: var(--green-soft);
+  color: var(--text);
+  border-color: var(--green-light);
 }
 
 .btn--block {
@@ -284,7 +281,10 @@ code {
   transform: scale(0.98);
 }
 
-/* ---------- hero ---------- */
+
+/* ============================================================
+   HERO
+   ============================================================ */
 
 .hero {
   max-width: var(--content-width);
@@ -304,7 +304,7 @@ code {
 
 .hero__kicker {
   font-family: var(--font-mono);
-  color: var(--green-main);
+  color: var(--green-light);
   font-size: 0.85rem;
   margin: 0 0 1.2rem;
 }
@@ -334,7 +334,7 @@ code {
 
 .dial-ring {
   fill: none;
-  stroke: var(--green-pale);
+  stroke: var(--green-medium);
   stroke-width: 1;
 }
 
@@ -344,20 +344,23 @@ code {
 }
 
 .dial-core {
-  fill: var(--green-soft);
-  stroke: var(--green-main);
+  fill: var(--surface-alt);
+  stroke: var(--green-light);
   stroke-width: 2;
 }
 
 .dial-check {
   fill: none;
-  stroke: var(--green-main);
+  stroke: var(--green-pale);
   stroke-width: 4;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-/* ---------- problema ---------- */
+
+/* ============================================================
+   PROBLEMA
+   ============================================================ */
 
 .problem__grid {
   display: grid;
@@ -373,29 +376,22 @@ code {
 }
 
 .compare-row {
-  border: 1px solid var(--border);
+  border: 1px solid var(--green-medium);
   border-radius: var(--radius);
   padding: 1rem 1.2rem;
-
-  background: var(--white);
-
-  box-shadow: 0 2px 8px rgba(7, 92, 58, 0.05);
-
-  transition:
-    border-color 0.15s ease,
-    background 0.15s ease;
+  background: var(--surface);
 }
 
 .compare-row--active {
-  border-color: var(--green-main);
-  background: var(--green-soft);
+  border-color: var(--green-light);
+  background: var(--surface-alt);
 }
 
 .compare-row__label {
   display: block;
   font-family: var(--font-mono);
   font-size: 0.92rem;
-  color: var(--green-dark);
+  color: var(--text);
 }
 
 .compare-row__desc {
@@ -405,18 +401,21 @@ code {
   margin-top: 0.3rem;
 }
 
-/* ---------- pipeline diagram ---------- */
+
+/* ============================================================
+   PIPELINE
+   ============================================================ */
 
 .pipeline {
   margin-top: 3rem;
 
-  border: 1px solid var(--border);
+  border: 1px solid var(--green-medium);
   border-radius: var(--radius);
 
   background:
     linear-gradient(var(--border-soft) 1px, transparent 1px) 0 0 / 100% 24px,
     linear-gradient(90deg, var(--border-soft) 1px, transparent 1px) 0 0 / 24px 100%,
-    var(--green-soft);
+    var(--surface);
 
   padding: 1rem;
   overflow-x: auto;
@@ -429,19 +428,19 @@ code {
 }
 
 .pl-node rect {
-  fill: var(--white);
-  stroke: var(--green-light);
+  fill: var(--surface-alt);
+  stroke: var(--green-medium);
   stroke-width: 1;
 }
 
 .pl-node text {
-  fill: var(--green-dark);
+  fill: var(--text);
   font-family: var(--font-mono);
   font-size: 11px;
 }
 
 .pl-node--decision rect {
-  stroke: var(--green-main);
+  stroke: var(--green-light);
 }
 
 .pl-node--accept rect {
@@ -453,7 +452,7 @@ code {
 }
 
 .pl-edge {
-  stroke: var(--green-light);
+  stroke: var(--text-faint);
   stroke-width: 1;
   fill: none;
   marker-end: url(#pl-arrow);
@@ -467,20 +466,26 @@ code {
   stroke: var(--reject);
 }
 
-/* ---------- glossary ---------- */
+
+/* ============================================================
+   GLOSSARY
+   ============================================================ */
 
 .glossary {
   margin-top: 2.5rem;
 
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+
   gap: 1.5rem;
 }
 
 .glossary__term {
   display: block;
+
   font-family: var(--font-mono);
-  color: var(--green-main);
+  color: var(--green-light);
+
   font-size: 0.85rem;
   margin-bottom: 0.4rem;
 }
@@ -490,7 +495,10 @@ code {
   margin-top: 0.2rem;
 }
 
-/* ---------- modes ---------- */
+
+/* ============================================================
+   MODES
+   ============================================================ */
 
 .modes__grid {
   margin-top: 2.5rem;
@@ -498,7 +506,7 @@ code {
   display: grid;
   grid-template-columns: 1fr 1fr;
 
-  border: 1px solid var(--border);
+  border: 1px solid var(--green-medium);
   border-radius: var(--radius);
 
   overflow: hidden;
@@ -506,23 +514,25 @@ code {
 
 .mode-card {
   padding: 2.2rem;
-  background: var(--white);
-  border-right: 1px solid var(--border);
+
+  background: var(--surface);
+
+  border-right: 1px solid var(--green-medium);
 }
 
 .mode-card--n {
   border-right: none;
-  background: var(--green-soft);
+  background: var(--surface-alt);
 }
 
 .mode-card__tag {
   display: inline-block;
 
   font-family: var(--font-mono);
-  color: var(--green-main);
+  color: var(--green-light);
 
   border: 1px solid var(--green-light);
-  border-radius: 3px;
+  border-radius: 2px;
 
   padding: 0.1rem 0.5rem;
 
@@ -532,7 +542,7 @@ code {
 
 .mode-card__question {
   font-family: var(--font-mono);
-  color: var(--green-dark);
+  color: var(--text);
   font-size: 0.95rem;
 }
 
@@ -541,6 +551,7 @@ code {
   padding-left: 1.1rem;
 
   color: var(--text-dim);
+
   font-size: 0.92rem;
 }
 
@@ -553,11 +564,15 @@ code {
 
   font-size: 0.9rem;
 
-  border-left: 3px solid var(--green-main);
+  border-left: 2px solid var(--green-light);
+
   padding-left: 1rem;
 }
 
-/* ---------- metrics ---------- */
+
+/* ============================================================
+   METRICS
+   ============================================================ */
 
 .metrics__grid {
   margin-top: 2.5rem;
@@ -574,7 +589,7 @@ code {
 }
 
 .metric-axis {
-  stroke: var(--border);
+  stroke: var(--green-medium);
   stroke-width: 1;
 }
 
@@ -583,15 +598,15 @@ code {
 }
 
 .metric-curve--genuine {
-  stroke: var(--green-main);
-}
-
-.metric-curve--impostor {
   stroke: var(--green-light);
 }
 
+.metric-curve--impostor {
+  stroke: var(--green-pale);
+}
+
 .metric-threshold {
-  stroke: var(--green-dark);
+  stroke: var(--text-faint);
   stroke-dasharray: 3 4;
 }
 
@@ -602,7 +617,7 @@ code {
 }
 
 .metric-label--threshold {
-  fill: var(--green-dark);
+  fill: var(--text-dim);
 }
 
 .metric-def {
@@ -611,7 +626,7 @@ code {
 
 .metric-def__name {
   font-family: var(--font-mono);
-  color: var(--green-main);
+  color: var(--text);
   font-size: 0.9rem;
 }
 
@@ -620,11 +635,14 @@ code {
   margin-top: 0.3rem;
 }
 
-/* ---------- standards ---------- */
+
+/* ============================================================
+   STANDARDS
+   ============================================================ */
 
 .standards__list {
   margin-top: 2rem;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--green-medium);
 }
 
 .standard-row {
@@ -635,14 +653,14 @@ code {
 
   padding: 1.1rem 0;
 
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-soft);
 
   align-items: baseline;
 }
 
 .standard-row__code {
   font-family: var(--font-mono);
-  color: var(--green-main);
+  color: var(--green-light);
   font-size: 0.9rem;
 }
 
@@ -657,7 +675,10 @@ code {
   color: var(--text-faint);
 }
 
-/* ---------- demo console ---------- */
+
+/* ============================================================
+   DEMO CONSOLE
+   ============================================================ */
 
 .demo code {
   display: inline;
@@ -682,9 +703,9 @@ code {
 
   aspect-ratio: 4 / 3;
 
-  background: var(--green-dark);
+  background: #032b1e;
 
-  border-radius: 4px;
+  border-radius: 2px;
 
   overflow: hidden;
 }
@@ -739,16 +760,17 @@ code {
   align-items: center;
   justify-content: center;
 
-  color: var(--green-pale);
+  color: var(--text-faint);
 
   font-family: var(--font-mono);
   font-size: 0.85rem;
 
-  background: var(--green-dark);
+  background: #032b1e;
 }
 
 .status-line {
   font-family: var(--font-mono);
+
   font-size: 0.78rem;
 
   color: var(--text-faint);
@@ -759,24 +781,29 @@ code {
 }
 
 .console__panel {
-  border: 1px solid var(--border);
+  border: 1px solid var(--green-medium);
+
   border-radius: var(--radius);
 
   padding: 1.5rem;
 
-  background: var(--white);
+  background: var(--surface);
 
   display: flex;
   flex-direction: column;
-
-  box-shadow: 0 4px 18px rgba(7, 92, 58, 0.08);
 }
+
+
+/* ============================================================
+   TABS
+   ============================================================ */
 
 .tabs {
   display: flex;
+
   gap: 0.3rem;
 
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--green-medium);
 
   margin-bottom: 1.3rem;
 }
@@ -791,6 +818,7 @@ code {
   font-size: 0.88rem;
 
   padding: 0.6rem 0.2rem;
+
   margin-right: 1.2rem;
 
   cursor: pointer;
@@ -799,8 +827,8 @@ code {
 }
 
 .tab.is-active {
-  color: var(--green-main);
-  border-bottom-color: var(--green-main);
+  color: var(--text);
+  border-bottom-color: var(--green-light);
 }
 
 .tab-panel {
@@ -810,6 +838,11 @@ code {
 .tab-panel.is-active {
   display: block;
 }
+
+
+/* ============================================================
+   FORM
+   ============================================================ */
 
 .field {
   display: block;
@@ -830,13 +863,13 @@ input[type="text"],
 select {
   width: 100%;
 
-  background: var(--green-soft);
+  background: var(--bg);
 
-  border: 1px solid var(--border);
+  border: 1px solid var(--green-medium);
 
   border-radius: var(--radius);
 
-  color: var(--green-dark);
+  color: var(--text);
 
   padding: 0.6rem 0.7rem;
 
@@ -848,7 +881,7 @@ input[type="text"]:focus,
 select:focus,
 .btn:focus-visible,
 input[type="range"]:focus-visible {
-  outline: 2px solid var(--green-main);
+  outline: 2px solid var(--green-light);
   outline-offset: 1px;
 }
 
@@ -865,21 +898,27 @@ input[type="range"]:focus-visible {
 }
 
 .field--slider strong {
-  color: var(--green-main);
+  color: var(--green-pale);
 
   font-family: var(--font-mono);
+
   font-weight: 500;
 }
 
 input[type="range"] {
   width: 100%;
-  accent-color: var(--green-main);
+  accent-color: var(--green-light);
 }
+
+
+/* ============================================================
+   RESULT
+   ============================================================ */
 
 .result {
   margin-top: 1.4rem;
 
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--green-medium);
 
   padding-top: 1.2rem;
 }
@@ -906,6 +945,7 @@ input[type="range"] {
   margin-top: 0.5rem;
 
   font-family: var(--font-mono);
+
   font-size: 0.8rem;
 
   color: var(--text-faint);
@@ -917,22 +957,28 @@ input[type="range"] {
   flex-wrap: wrap;
 }
 
-/* ---------- vault files ---------- */
+
+/* ============================================================
+   VAULT FILES
+   ============================================================ */
 
 .vault {
   margin-top: 2rem;
 
-  border: 1px solid var(--border);
+  border: 1px solid var(--green-medium);
+
   border-radius: var(--radius);
 
   padding: 1.5rem;
 
-  background: var(--green-soft);
+  background: var(--surface);
 }
 
 .vault__header {
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
 }
 
@@ -940,13 +986,15 @@ input[type="range"] {
   font-family: var(--font-mono);
 
   font-size: 0.72rem;
+
   letter-spacing: 0.04em;
 
   padding: 0.25rem 0.6rem;
 
-  border-radius: 3px;
+  border-radius: 2px;
 
   border: 1px solid var(--reject);
+
   color: var(--reject);
 
   transition:
@@ -963,6 +1011,7 @@ input[type="range"] {
   margin-top: 1.2rem;
 
   display: grid;
+
   grid-template-columns: repeat(3, 1fr);
 
   gap: 1rem;
@@ -970,17 +1019,18 @@ input[type="range"] {
 
 .file {
   display: flex;
+
   align-items: center;
 
   gap: 0.6rem;
 
   padding: 0.9rem 1rem;
 
-  border: 1px solid var(--border);
+  border: 1px solid var(--green-medium);
 
   border-radius: var(--radius);
 
-  background: var(--white);
+  background: var(--surface-alt);
 
   filter: blur(2.5px) grayscale(0.4);
 
@@ -988,8 +1038,7 @@ input[type="range"] {
 
   transition:
     filter 0.35s ease,
-    opacity 0.35s ease,
-    border-color 0.25s ease;
+    opacity 0.35s ease;
 }
 
 .file.is-unlocked {
@@ -997,34 +1046,36 @@ input[type="range"] {
 
   opacity: 1;
 
-  border-color: var(--accept);
-
-  background: var(--green-pale);
+  border-color: var(--green-light);
 }
 
 .file__name {
   font-family: var(--font-mono);
   font-size: 0.85rem;
-
-  color: var(--green-dark);
 }
 
-/* ---------- audit log ---------- */
+
+/* ============================================================
+   AUDIT LOG
+   ============================================================ */
 
 .audit {
   margin-top: 2rem;
 
-  border: 1px solid var(--border);
+  border: 1px solid var(--green-medium);
+
   border-radius: var(--radius);
 
   padding: 1.5rem;
 
-  background: var(--white);
+  background: var(--surface);
 }
 
 .audit__header {
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
 
   flex-wrap: wrap;
@@ -1039,6 +1090,7 @@ input[type="range"] {
 
 .audit__table-wrap {
   margin-top: 1.2rem;
+
   overflow-x: auto;
 }
 
@@ -1048,19 +1100,20 @@ input[type="range"] {
   border-collapse: collapse;
 
   font-family: var(--font-mono);
+
   font-size: 0.8rem;
 }
 
 .audit__table th {
   text-align: left;
 
-  color: var(--green-main);
+  color: var(--green-light);
 
   font-weight: 500;
 
   padding: 0.5rem 0.6rem;
 
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--green-medium);
 }
 
 .audit__table td {
@@ -1089,7 +1142,10 @@ td.is-reject {
   color: var(--reject);
 }
 
-/* ---------- footer ---------- */
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
 
 .footer {
   max-width: var(--content-width);
@@ -1108,7 +1164,7 @@ td.is-reject {
 
   gap: 1rem;
 
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--green-medium);
 
   color: var(--text-faint);
 }
@@ -1116,7 +1172,7 @@ td.is-reject {
 .footer__brand {
   font-family: var(--font-display);
 
-  color: var(--green-dark);
+  color: var(--text);
 
   margin: 0 0 0.3rem;
 }
@@ -1136,9 +1192,13 @@ td.is-reject {
   gap: 0.6rem;
 }
 
-/* ---------- responsive ---------- */
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
 
 @media (max-width: 860px) {
+
   .hero {
     grid-template-columns: 1fr;
     padding-top: 3rem;
@@ -1146,7 +1206,9 @@ td.is-reject {
 
   .hero__dial {
     order: -1;
+
     max-width: 220px;
+
     margin: 0 auto 1rem;
   }
 
@@ -1164,7 +1226,8 @@ td.is-reject {
 
   .mode-card {
     border-right: none;
-    border-bottom: 1px solid var(--border);
+
+    border-bottom: 1px solid var(--green-medium);
   }
 
   .metrics__grid {
@@ -1173,6 +1236,7 @@ td.is-reject {
 
   .standard-row {
     grid-template-columns: 1fr;
+
     gap: 0.3rem;
   }
 
@@ -1186,11 +1250,13 @@ td.is-reject {
 
   .nav__links {
     gap: 1rem;
+
     font-size: 0.85rem;
   }
 }
 
 @media (max-width: 520px) {
+
   .glossary {
     grid-template-columns: 1fr;
   }
