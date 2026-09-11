@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIOVAULT — Control de acceso biométrico facial</title>
+<meta name="description" content="Prototipo académico de un sistema de control de acceso mediante reconocimiento facial: captura, extracción de características, comparación, decisión y auditoría.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%2314171C%22 stroke=%22%23C08A4E%22 stroke-width=%224%22/><circle cx=%2250%22 cy=%2250%22 r=%2212%22 fill=%22%23C08A4E%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="grain"></div>
+
+<header class="nav">
+  <a href="#top" class="nav__brand">
+    <svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="5"/>
+      <circle cx="50" cy="50" r="10" fill="currentColor"/>
+    </svg>
+    BIOVAULT
+  </a>
+  <nav class="nav__links">
+    <a href="#arquitectura">Arquitectura</a>
+    <a href="#modos">Modos</a>
+    <a href="#estandares">Estándares</a>
+    <a href="#demo" class="nav__cta">Probar demo</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__text">
+      <p class="hero__kicker">Prototipo académico · Reconocimiento facial</p>
+      <h1>Un rostro es la llave.<br>El sistema decide.</h1>
+      <p class="hero__lead">
+        BIOVAULT es un sistema de control de acceso que sustituye la contraseña por una
+        muestra biométrica facial. Captura, procesa, compara contra una plantilla y
+        toma una decisión de apertura o bloqueo — con cada intento quedando registrado.
+      </p>
+      <div class="hero__actions">
+        <a href="#demo" class="btn btn--primary">Probar la demo en vivo</a>
+        <a href="#arquitectura" class="btn btn--ghost">Ver cómo funciona</a>
+      </div>
+    </div>
+    <div class="hero__dial" aria-hidden="true">
+      <svg viewBox="0 0 420 420" class="dial-svg">
+        <circle cx="210" cy="210" r="200" class="dial-ring dial-ring--outer"/>
+        <circle cx="210" cy="210" r="150" class="dial-ring"/>
+        <circle cx="210" cy="210" r="100" class="dial-ring"/>
+        <g class="dial-ticks"></g>
+        <circle cx="210" cy="210" r="46" class="dial-core"/>
+        <path d="M195 205 l10 10 l22 -26" class="dial-check"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- PROBLEMA -->
+  <section class="section problem">
+    <div class="problem__grid">
+      <div>
+        <h2>El problema de siempre</h2>
+        <p>
+          Una contraseña se puede compartir, anotar o robar. Una tarjeta se puede prestar.
+          Ninguna de las dos confirma que la persona frente a la puerta sea realmente
+          quien dice ser.
+        </p>
+      </div>
+      <div class="problem__compare">
+        <div class="compare-row">
+          <span class="compare-row__label">Usuario + contraseña</span>
+          <span class="compare-row__desc">Algo que sabes — transferible</span>
+        </div>
+        <div class="compare-row compare-row--active">
+          <span class="compare-row__label">Rostro → características → comparación</span>
+          <span class="compare-row__desc">Algo que eres — ligado a la persona</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARQUITECTURA -->
+  <section class="section" id="arquitectura">
+    <p class="section__kicker">Arquitectura</p>
+    <h2>Del sensor a la decisión</h2>
+    <p class="section__lead">
+      Cada intento de acceso recorre la misma tubería: se adquiere una imagen, se aísla el
+      rostro, se traduce a un vector de características, se compara contra una plantilla
+      guardada y el resultado abre o cierra el repositorio.
+    </p>
+
+    <div class="pipeline" id="pipeline-diagram"></div>
+
+    <div class="glossary">
+      <div class="glossary__item">
+        <span class="glossary__term">Embedding</span>
+        <p>Representación numérica del rostro — un vector de 128 posiciones que un modelo aprende a extraer, no una foto.</p>
+      </div>
+      <div class="glossary__item">
+        <span class="glossary__term">Plantilla biométrica</span>
+        <p>El embedding de referencia guardado para un usuario en el momento del registro.</p>
+      </div>
+      <div class="glossary__item">
+        <span class="glossary__term">Distancia</span>
+        <p>Qué tan lejos está el embedding capturado del embedding de referencia. Menor distancia, mayor parecido.</p>
+      </div>
+      <div class="glossary__item">
+        <span class="glossary__term">Umbral</span>
+        <p>El límite de distancia a partir del cual el sistema deja de considerar que dos rostros coinciden.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODOS -->
+  <section class="section modes" id="modos">
+    <p class="section__kicker">Dos formas de preguntar</p>
+    <h2>Verificación 1:1 vs. identificación 1:N</h2>
+
+    <div class="modes__grid">
+      <div class="mode-card">
+        <span class="mode-card__tag">1:1</span>
+        <h3>Verificación</h3>
+        <p class="mode-card__question">"¿Eres quien dices ser?"</p>
+        <p>El usuario declara su identidad. El sistema busca únicamente su plantilla y compara contra esa referencia.</p>
+        <ol class="mode-card__steps">
+          <li>Se selecciona un nombre registrado</li>
+          <li>Se captura el rostro</li>
+          <li>Se compara contra esa única plantilla</li>
+          <li>Distancia ≤ umbral → acceso</li>
+        </ol>
+      </div>
+      <div class="mode-card mode-card--n">
+        <span class="mode-card__tag">1:N</span>
+        <h3>Identificación</h3>
+        <p class="mode-card__question">"¿Quién eres, de entre todos?"</p>
+        <p>No se declara identidad. El sistema compara contra toda la galería y busca la coincidencia más cercana.</p>
+        <ol class="mode-card__steps">
+          <li>Se captura el rostro</li>
+          <li>Se compara contra cada plantilla registrada</li>
+          <li>Se toma la distancia mínima</li>
+          <li>Mínima ≤ umbral → identificado. Si no, desconocido.</li>
+        </ol>
+      </div>
+    </div>
+    <p class="modes__note">Ser la persona más parecida en la base de datos no basta — si la mejor coincidencia aún supera el umbral, el acceso se rechaza igual.</p>
+  </section>
+
+  <!-- METRICAS -->
+  <section class="section metrics">
+    <p class="section__kicker">Calibración</p>
+    <h2>Dos formas de fallar</h2>
+    <div class="metrics__grid">
+      <svg viewBox="0 0 480 220" class="metrics__svg" aria-hidden="true">
+        <line x1="20" y1="180" x2="460" y2="180" class="metric-axis"/>
+        <path d="M40 180 C 110 180, 130 40, 190 40 C 250 40, 270 180, 340 180" class="metric-curve metric-curve--genuine"/>
+        <path d="M140 180 C 210 180, 230 40, 290 40 C 350 40, 370 180, 440 180" class="metric-curve metric-curve--impostor"/>
+        <line x1="240" y1="30" x2="240" y2="180" class="metric-threshold"/>
+        <text x="244" y="24" class="metric-label metric-label--threshold">umbral</text>
+        <text x="90" y="205" class="metric-label">genuinos</text>
+        <text x="360" y="205" class="metric-label">impostores</text>
+      </svg>
+      <div class="metrics__text">
+        <div class="metric-def">
+          <span class="metric-def__name">FAR — Falsa aceptación</span>
+          <p>Un impostor es aceptado. El objetivo de diseño del proyecto es FAR ≤ 0.01%, aunque confirmar esa cifra exige muchas más pruebas de las que un prototipo escolar puede correr.</p>
+        </div>
+        <div class="metric-def">
+          <span class="metric-def__name">FRR — Falso rechazo</span>
+          <p>El usuario legítimo es rechazado. Baja si se relaja el umbral, pero eso sube el FAR — es un balance, no un máximo absoluto.</p>
+        </div>
+        <div class="metric-def">
+          <span class="metric-def__name">EER — Punto de equilibrio</span>
+          <p>El umbral donde FAR y FRR se cruzan. Sirve como referencia para elegir un umbral de trabajo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESTANDARES -->
+  <section class="section standards" id="estandares">
+    <p class="section__kicker">Marco de referencia</p>
+    <h2>Estándares considerados</h2>
+    <div class="standards__list">
+      <div class="standard-row">
+        <span class="standard-row__code">ISO/IEC 19794-5</span>
+        <p>Formato de intercambio de datos de imágenes faciales — escena, propiedades fotográficas y atributos digitales.</p>
+      </div>
+      <div class="standard-row">
+        <span class="standard-row__code">ISO/IEC 24713-1</span>
+        <p>Arquitectura general de un sistema biométrico y la relación entre sus componentes y la aplicación que lo usa.</p>
+      </div>
+      <div class="standard-row">
+        <span class="standard-row__code">ISO/IEC 30107-1 / -3</span>
+        <p>Marco y terminología de detección de ataques de presentación (PAD) — y cómo evaluar su rendimiento.</p>
+      </div>
+      <div class="standard-row">
+        <span class="standard-row__code">ISO/IEC 29794-5</span>
+        <p>Calidad de muestras biométricas faciales — cuándo una captura es suficiente para enrolar o comparar.</p>
+      </div>
+    </div>
+    <p class="standards__disclaimer">Se usan como referencia conceptual para justificar decisiones de diseño; este prototipo no está certificado bajo ninguno de ellos.</p>
+  </section>
+
+  <!-- DEMO -->
+  <section class="section demo" id="demo">
+    <p class="section__kicker">Demo en vivo</p>
+    <h2>Pruébalo con tu propia cámara</h2>
+    <p class="section__lead">
+      Todo corre en tu navegador: nada se sube a ningún servidor. Las plantillas y el
+      registro de auditoría se guardan solo en este dispositivo, con <code>localStorage</code>.
+    </p>
+
+    <div class="console">
+      <div class="console__camera">
+        <div class="bracket-frame" id="camera-frame">
+          <video id="video" autoplay muted playsinline></video>
+          <canvas id="overlay"></canvas>
+          <div class="camera__placeholder" id="camera-placeholder">
+            <p>Cámara desactivada</p>
+          </div>
+        </div>
+        <button class="btn btn--primary btn--block" id="btn-camera">Activar cámara</button>
+        <p class="status-line" id="model-status">Cargando modelos de reconocimiento…</p>
+      </div>
+
+      <div class="console__panel">
+        <div class="tabs" role="tablist">
+          <button class="tab is-active" data-tab="registrar" role="tab">Registrar</button>
+          <button class="tab" data-tab="verificar" role="tab">Verificar 1:1</button>
+          <button class="tab" data-tab="identificar" role="tab">Identificar 1:N</button>
+        </div>
+
+        <div class="tab-panel is-active" data-panel="registrar">
+          <label class="field">
+            <span>Nombre del usuario</span>
+            <input type="text" id="reg-name" placeholder="p. ej. Yahir" autocomplete="off">
+          </label>
+          <p class="field-hint" id="reg-progress">0 / 5 muestras capturadas</p>
+          <button class="btn btn--secondary btn--block" id="btn-register">Capturar muestra</button>
+          <button class="btn btn--ghost btn--block" id="btn-save-user" disabled>Guardar plantilla</button>
+        </div>
+
+        <div class="tab-panel" data-panel="verificar">
+          <label class="field">
+            <span>Identidad declarada</span>
+            <select id="verify-user"></select>
+          </label>
+          <button class="btn btn--secondary btn--block" id="btn-verify">Capturar y verificar</button>
+        </div>
+
+        <div class="tab-panel" data-panel="identificar">
+          <p class="field-hint">El sistema comparará contra todas las plantillas registradas y tomará la distancia mínima.</p>
+          <button class="btn btn--secondary btn--block" id="btn-identify">Capturar e identificar</button>
+        </div>
+
+        <label class="field field--slider">
+          <span>Umbral de decisión <strong id="threshold-value">0.50</strong></span>
+          <input type="range" id="threshold" min="0.30" max="0.80" step="0.01" value="0.50">
+        </label>
+
+        <div class="result" id="result-panel">
+          <p class="result__status" id="result-status">Esperando…</p>
+          <div class="result__meta" id="result-meta"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vault">
+      <div class="vault__header">
+        <h3 id="vault-title">Repositorio protegido</h3>
+        <span class="vault__badge" id="vault-badge">BLOQUEADO</span>
+      </div>
+      <div class="vault__files" id="vault-files">
+        <div class="file" data-file="tecnico">
+          <span class="file__icon">🔒</span>
+          <span class="file__name">documento_tecnico.pdf</span>
+        </div>
+        <div class="file" data-file="reporte">
+          <span class="file__icon">🔒</span>
+          <span class="file__name">reporte_confidencial.txt</span>
+        </div>
+        <div class="file" data-file="datos">
+          <span class="file__icon">🔒</span>
+          <span class="file__name">datos_produccion.xlsx</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="audit">
+      <div class="audit__header">
+        <h3>Registro de auditoría</h3>
+        <div class="audit__actions">
+          <button class="btn btn--ghost btn--small" id="btn-export">Exportar CSV</button>
+          <button class="btn btn--ghost btn--small" id="btn-clear">Borrar datos</button>
+        </div>
+      </div>
+      <div class="audit__table-wrap">
+        <table class="audit__table">
+          <thead>
+            <tr>
+              <th>Hora</th><th>Usuario</th><th>Modo</th><th>Distancia</th><th>Umbral</th><th>Resultado</th>
+            </tr>
+          </thead>
+          <tbody id="audit-body">
+            <tr class="audit__empty"><td colspan="6">Aún no hay eventos registrados.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div>
+    <p class="footer__brand">BIOVAULT</p>
+    <p>Prototipo académico de control de acceso biométrico facial.</p>
+  </div>
+  <div class="footer__stack">
+    <span>face-api.js</span><span>·</span><span>JavaScript</span><span>·</span><span>localStorage</span>
+  </div>
+</footer>
+
+<script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+<script defer src="js/app.js"></script>
+</body>
+</html>
